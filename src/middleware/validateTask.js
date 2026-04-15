@@ -18,3 +18,17 @@ export const validateTask = [
 
   checkValidationResults,
 ];
+
+export function validateTaskQuery(req, res, next) {
+  const { completed } = req.query;
+
+  if (completed === undefined) return next();
+
+  if (completed !== 'true' && completed !== 'false') {
+    return res.status(400).json({
+      error: 'Invalid value for completed parameter.'
+    });
+  }
+
+  next();
+};
